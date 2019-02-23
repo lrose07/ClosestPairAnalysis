@@ -32,11 +32,11 @@ class BruteForceSolver {
 
     private void computeClosestPair(AlgyPoint[] points) {
         closestPair = new AlgyPoint[2];
-        double smallestDistance = getDistance(points[0], points[1]);
+        double smallestDistance = Math.abs(getDistance(points[0], points[1]));
 
-        for (int i = 0; i < points.length - 2; i++) {
-            for (int j = i+1; j < points.length - 1; j++) {
-                double distance = getDistance(points[i], points[j]);
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i+1; j < points.length; j++) {
+                double distance = Math.abs(getDistance(points[i], points[j]));
                 if (distance < smallestDistance) {
                     smallestDistance = distance;
                     closestPair[0] = points[i];
