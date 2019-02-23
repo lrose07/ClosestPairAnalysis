@@ -18,7 +18,11 @@ class BruteForceSolver {
             allPoints[j] = new AlgyPoint(pointX, pointY);
         }
 
+        long startTime = System.nanoTime();
         computeClosestPair(allPoints);
+        long endTime = System.nanoTime();
+
+        System.out.println("duration: " + ((endTime - startTime) / 1000000) + " milliseconds");
 
         for (AlgyPoint p : closestPair) {
             System.out.println(p.toString());
