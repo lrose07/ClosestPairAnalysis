@@ -1,9 +1,6 @@
-import java.util.ArrayList;
-
 class BruteForceSolver {
 
-    //private ArrayList<AlgyPoint> allPoints = new ArrayList<>();
-    private AlgyPoint[] allPoints;
+    private AlgyPoint[] closestPair;
 
     BruteForceSolver(String inputStream) {
         parseInput(inputStream);
@@ -21,8 +18,31 @@ class BruteForceSolver {
             allPoints[j] = new AlgyPoint(pointX, pointY);
         }
 
-        for (AlgyPoint p : allPoints) {
+        computeClosestPair(allPoints);
+
+        for (AlgyPoint p : closestPair) {
             System.out.println(p.toString());
+        }
+    }
+
+    private double getDistance(AlgyPoint a, AlgyPoint b) {
+        return Math.sqrt(Math.pow((b.getX() - a.getX()), 2) +
+                Math.pow((b.getY() - a.getY()), 2));
+    }
+
+    private void computeClosestPair(AlgyPoint[] points) {
+        closestPair = new AlgyPoint[2];
+        double smallestDistance = getDistance(points[0], points[1]);
+
+        for (int i = 0; i < points.length - 2; i++) {
+            for (int j = i+1; j < points.length - 1; j++) {
+                double distance = getDistance(points[i], points[j]);
+                if (distance < smallestDistance) {
+                    smallestDistance = distance;
+                    closestPair[0] = points[i];
+                    closestPair[1] = points[j];
+                }
+            }
         }
     }
 }
