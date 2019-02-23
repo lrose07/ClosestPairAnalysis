@@ -1,31 +1,32 @@
 class BruteForceSolver {
 
+    private AlgyPoint[] allPoints;
     private AlgyPoint[] closestPair;
 
     BruteForceSolver(String inputStream) {
+        long readStartTime = System.nanoTime();
         parseInput(inputStream);
+        long readEndTime = System.nanoTime();
+
+        System.out.println("Time to read/parse array: " + ((readEndTime - readStartTime) / 1000000) + " milliseconds");
+
+        long computeStartTime = System.nanoTime();
+        computeClosestPair(allPoints);
+        long computeEndTime = System.nanoTime();
+
+        System.out.println("Time to find pair: " + ((computeEndTime - computeStartTime) / 1000000) + " milliseconds");
     }
 
     private void parseInput(String s) {
         String[] allInputNums = s.split("\\s+");
         int countOfPoints = Integer.parseInt(allInputNums[0]);
 
-        AlgyPoint[] allPoints = new AlgyPoint[countOfPoints];
+        allPoints = new AlgyPoint[countOfPoints];
 
         for (int i = 1, j = 0; i < allInputNums.length; i+=2, j++) {
             int pointX = Integer.parseInt(allInputNums[i]);
             int pointY = Integer.parseInt(allInputNums[i+1]);
             allPoints[j] = new AlgyPoint(pointX, pointY);
-        }
-
-        long startTime = System.nanoTime();
-        computeClosestPair(allPoints);
-        long endTime = System.nanoTime();
-
-        System.out.println("duration: " + ((endTime - startTime) / 1000000) + " milliseconds");
-
-        for (AlgyPoint p : closestPair) {
-            System.out.println(p.toString());
         }
     }
 
