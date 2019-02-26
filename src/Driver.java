@@ -6,6 +6,7 @@ public class Driver {
 
     public static void main(String[] args) {
         new BruteForceSolver(getInput(args[0]));
+        new DivideConquerSolver(getInput(args[0]));
     }
 
     private static String getInput(String s) {

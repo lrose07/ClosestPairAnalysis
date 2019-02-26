@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class AlgyPoint {
 
     private int x;
@@ -8,15 +10,27 @@ public class AlgyPoint {
         y = _y;
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return  y;
     }
 
     public String toString() {
         return "x: " + getX() + ", y: " + getY();
+    }
+
+    public class CompareByX implements Comparator<AlgyPoint> {
+        public int compare(AlgyPoint a, AlgyPoint b) {
+            return (a.x - b.x) < 0 ? 0 : 1;
+        }
+    }
+
+    public class CompareByY implements Comparator<AlgyPoint> {
+        public int compare(AlgyPoint a, AlgyPoint b) {
+            return (a.x - b.x) >= 0 ? 0 : 1;
+        }
     }
 }
