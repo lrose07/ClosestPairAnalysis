@@ -17,6 +17,10 @@ class BruteForceSolver {
         System.out.println("Time to find pair: " + ((computeEndTime - computeStartTime) / 1000000) + " milliseconds");
     }
 
+    BruteForceSolver(AlgyPoint[] points) {
+        computeClosestPair(points);
+    }
+
     private void parseInput(String s) {
         String[] allInputNums = s.split("\\s+");
         int countOfPoints = Integer.parseInt(allInputNums[0]);
@@ -49,5 +53,9 @@ class BruteForceSolver {
                 }
             }
         }
+    }
+
+    AlgyPoint[] getClosestPair() {
+        return closestPair;
     }
 }

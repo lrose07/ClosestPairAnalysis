@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 class DivideConquerSolver {
@@ -39,9 +40,10 @@ class DivideConquerSolver {
     private void runAlgorithm() {
         AlgyPoint[] xSorted = sortPointsByX();
         AlgyPoint[] ySorted = sortPointsByY();
+        closestPair(xSorted, ySorted);
     }
 
-    private void closestPair(AlgyPoint[] sortedXArray, AlgyPoint[] sortedYArray) {
+    private AlgyPoint[] closestPair(AlgyPoint[] sortedXArray, AlgyPoint[] sortedYArray) {
         int totalDataSize = sortedXArray.length;
         int midpoint = sortedXArray.length / 2;
 
@@ -51,7 +53,8 @@ class DivideConquerSolver {
         AlgyPoint[] rightYSorted = new AlgyPoint[midpoint];
 
         if (totalDataSize <= 3) {
-            System.out.println("run brute force");
+            BruteForceSolver BFSolver = new BruteForceSolver(sortedXArray);
+            return BFSolver.getClosestPair();
         } else {
             System.arraycopy(sortedXArray, 0,
                     leftXSorted, 0, leftXSorted.length);
@@ -77,6 +80,33 @@ class DivideConquerSolver {
                 }
                 index++;
             }
+
+            AlgyPoint[] closestLeft = closestPair(leftXSorted, leftYSorted);
+            AlgyPoint[] closestRight = closestPair(rightXSorted, rightYSorted);
+
+            double distanceLeft = getDistance(closestLeft[0], closestLeft[1]);
+            double distanceRight = getDistance(closestRight[0], closestRight[1]);
+
+            double distance = Math.min(distanceLeft, distanceRight);
+            double distanceSquared = Math.pow(distance, 2);
+
+            int middlePointX = sortedXArray[midpoint].getX();
+
+            ArrayList<AlgyPoint> slab = new ArrayList<>();
+            for (AlgyPoint point : sortedYArray) {
+                if (Math.abs(point.getX()) > (middlePointX - distance) ||
+                        Math.abs(point.getX()) < (middlePointX + distance)) {
+                    slab.add(point);
+                }
+            }
         }
+
+        AlgyPoint[] temp = new AlgyPoint[5];
+        return temp;
+    }
+
+    private double getDistance(AlgyPoint a, AlgyPoint b) {
+        return Math.sqrt(Math.pow((b.getX() - a.getX()), 2) +
+                Math.pow((b.getY() - a.getY()), 2));
     }
 }
