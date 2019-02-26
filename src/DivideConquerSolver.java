@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class DivideConquerSolver {
 
     private AlgyPoint[] allPoints;
@@ -19,7 +21,11 @@ class DivideConquerSolver {
         }
     }
 
-    private void sortAllPoints() {
+    void sortPointsByX() {
+        Arrays.sort(allPoints, new CompareByX());
+    }
 
+    void sortPointsByY() {
+        Arrays.sort(allPoints, new CompareByY());
     }
 }

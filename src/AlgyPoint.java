@@ -21,16 +21,4 @@ public class AlgyPoint {
     public String toString() {
         return "x: " + getX() + ", y: " + getY();
     }
-
-    public class CompareByX implements Comparator<AlgyPoint> {
-        public int compare(AlgyPoint a, AlgyPoint b) {
-            return (a.x - b.x) < 0 ? 0 : 1;
-        }
-    }
-
-    public class CompareByY implements Comparator<AlgyPoint> {
-        public int compare(AlgyPoint a, AlgyPoint b) {
-            return (a.x - b.x) >= 0 ? 0 : 1;
-        }
-    }
 }
