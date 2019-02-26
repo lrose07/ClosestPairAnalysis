@@ -51,14 +51,32 @@ class DivideConquerSolver {
         AlgyPoint[] rightYSorted = new AlgyPoint[midpoint];
 
         if (totalDataSize <= 3) {
-            // run brute force solver
+            System.out.println("run brute force");
         } else {
             System.arraycopy(sortedXArray, 0,
                     leftXSorted, 0, leftXSorted.length);
             System.arraycopy(sortedXArray, midpoint + 1,
                     rightXSorted, 0, rightXSorted.length);
             // distribute/copy the same points from leftXSorted into leftYSorted
+            int index = 0;
+            for (AlgyPoint point : sortedYArray) {
+                for (AlgyPoint innerPoint : leftXSorted) {
+                    if (innerPoint.getX() == point.getX()) {
+                        leftYSorted[index] = innerPoint;
+                    }
+                }
+                index++;
+            }
             // distribute/copy the same points from rightXSorted into rightYSorted
+            index = 0;
+            for (AlgyPoint point : sortedYArray) {
+                for (AlgyPoint innerPoint : rightXSorted) {
+                    if (innerPoint.getX() == point.getX()) {
+                        rightYSorted[index] = innerPoint;
+                    }
+                }
+                index++;
+            }
         }
     }
 }
