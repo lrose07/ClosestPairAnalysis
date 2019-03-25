@@ -3,6 +3,10 @@ class BruteForceSolver {
     private AlgyPoint[] allPoints;
     private AlgyPoint[] closestPair;
 
+    BruteForceSolver() {
+
+    }
+
     BruteForceSolver(String inputStream) {
         long readStartTime = System.nanoTime();
         parseInput(inputStream);
@@ -15,11 +19,18 @@ class BruteForceSolver {
         long computeEndTime = System.nanoTime();
 
         System.out.println("Time to find pair: " + ((computeEndTime - computeStartTime) / 1000000) + " milliseconds");
+
+        System.out.println("Closest pair: (" + closestPair[0] + ") and (" + closestPair[1] + ")");
+        System.out.println("with a distance of " + getDistance(closestPair[0], closestPair[1]));
     }
 
     BruteForceSolver(AlgyPoint[] points) {
         computeClosestPair(points);
     }
+
+//    void solve(AlgyPoint[] points) {
+//
+//    }
 
     private void parseInput(String s) {
         String[] allInputNums = s.split("\\s+");
@@ -39,7 +50,7 @@ class BruteForceSolver {
                 Math.pow((b.getY() - a.getY()), 2));
     }
 
-    private void computeClosestPair(AlgyPoint[] points) {
+    void computeClosestPair(AlgyPoint[] points) {
         closestPair = new AlgyPoint[2];
         double smallestDistance = Math.abs(getDistance(points[0], points[1]));
 
@@ -56,6 +67,9 @@ class BruteForceSolver {
     }
 
     AlgyPoint[] getClosestPair() {
+//        System.out.println("closest Pair:");
+//        System.out.println(closestPair[0]);
+//        System.out.println(closestPair[1]);
         return closestPair;
     }
 }
