@@ -6,7 +6,14 @@ class DivideConquerSolver {
     private AlgyPoint[] allPoints;
     private AlgyPoint[] currentClosestPair = new AlgyPoint[2];
     private AlgyPoint[] closestPair;
+    private double currentSmallestDistance;
     private int recurseCount = 0;
+
+    private AlgyPoint[] leftXSorted;
+    private AlgyPoint[] rightXSorted;
+
+    private AlgyPoint[] leftYSorted;
+    private AlgyPoint[] rightYSorted;
 
     BruteForceSolver bfSolver = new BruteForceSolver();
 
@@ -47,116 +54,97 @@ class DivideConquerSolver {
         AlgyPoint[] ySorted = sortPointsByY();
 
         //System.out.println("sorted x array [0]: " + xSorted[0]);
+        currentSmallestDistance = getDistance(xSorted[0], xSorted[1]);
         closestPair(xSorted, ySorted);
+
+        System.out.println("\nSmallest distance: " + currentSmallestDistance);
+        System.out.println("P1: " + currentClosestPair[0]);
+        System.out.println("P2: " + currentClosestPair[1]);
     }
 
     double closestPair(AlgyPoint[] sortedXArray, AlgyPoint[] sortedYArray) {
-//        recurseCount++;
-//        System.out.println(recurseCount);
-//        System.out.println("sorted x array [0]: " + sortedXArray[sortedXArray.length - 1]);
-//        int totalDataSize = sortedXArray.length;
-//        int midpoint = totalDataSize / 2;
-//
-//        AlgyPoint[] leftXSorted = new AlgyPoint[midpoint];
-//        AlgyPoint[] rightXSorted = new AlgyPoint[midpoint];
-//        AlgyPoint[] leftYSorted = new AlgyPoint[midpoint];
-//        AlgyPoint[] rightYSorted = new AlgyPoint[midpoint];
-//
-//        if (totalDataSize <= 3) {
-//            bfSolver.solve(sortedXArray);
-//            System.out.println("sortedXArray in bfsolver call: " + sortedXArray[0]);
-//            bfSolver.computeClosestPair(sortedXArray);
-//            System.out.println("bfSolver closest pair [0]: " + bfSolver.getClosestPair()[0]);
-//            return bfSolver.getClosestPair();
-//            closestPair = new AlgyPoint[2];
-//            double smallestDistance = Math.abs(getDistance(sortedXArray[0], sortedXArray[1]));
-//
-//            for (int i = 0; i < sortedXArray.length; i++) {
-//                for (int j = i+1; j < sortedXArray.length; j++) {
-//                    double distance = Math.abs(getDistance(sortedXArray[i], sortedXArray[j]));
-//                    if (distance < smallestDistance) {
-//                        smallestDistance = distance;
-//                        currentClosestPair[0] = sortedXArray[i];
-//                        currentClosestPair[1] = sortedXArray[j];
-//                    }
-//                }
-//            }
-//        } else {
-//            System.arraycopy(sortedXArray, 0,
-//                    leftXSorted, 0, leftXSorted.length);
-//            System.arraycopy(sortedXArray, (sortedXArray.length / 2),
-//                    rightXSorted, 0, rightXSorted.length);
-//
-//            // distribute/copy the same points from leftXSorted into leftYSorted
-//            int index = 0;
-//            for (AlgyPoint point : sortedYArray) {
-//                for (AlgyPoint innerPoint : leftXSorted) {
-//                    if ((innerPoint.getX() == point.getX()) && (innerPoint.getY() == point.getY())) {
-//                        leftYSorted[index] = innerPoint;
-//                        index++;
-//                    }
-//                }
-//            }
-//
-//            // distribute/copy the same points from rightXSorted into rightYSorted
-//            index = 0;
-//            for (AlgyPoint point : sortedYArray) {
-//                for (AlgyPoint innerPoint : rightXSorted) {
-//                    if ((innerPoint.getX() == point.getX()) && innerPoint.getY() == point.getY()) {
-//                        rightYSorted[index] = innerPoint;
-//                        index++;
-//                    }
-//                }
-//            }
-//
-//            AlgyPoint[] closestLeft = closestPair(leftXSorted, leftYSorted);
-//            AlgyPoint[] closestRight = closestPair(rightXSorted, rightYSorted);
-//
-//            System.out.println("closestLeft(): " + closestLeft[0]);
-//
-//            double distanceLeft = getDistance(closestLeft[0], closestLeft[1]);
-//            double distanceRight = getDistance(closestRight[0], closestRight[1]);
-//
-//            if (distanceLeft >= distanceRight) {
-//                currentClosestPair[0] = closestLeft[0];
-//                currentClosestPair[1] = closestLeft[1];
-//            } else {
-//                currentClosestPair[0] = closestRight[0];
-//                currentClosestPair[1] = closestRight[1];
-//            }
-//
-//            double distance = Math.min(distanceLeft, distanceRight);
-//            double distanceSquared = Math.pow(distance, 2);
-//
-//            int middlePointX = sortedXArray[midpoint].getX();
-//
-//            ArrayList<AlgyPoint> slab = new ArrayList<>();
-//            for (AlgyPoint point : sortedYArray) {
-//                if (Math.abs(point.getX()) > (middlePointX - distance) ||
-//                        Math.abs(point.getX()) < (middlePointX + distance)) {
-//                    slab.add(point);
-//                }
-//            }
-//
-//            int arrayCheckOffset = 7; // number of points to check above current point
-//
-//            for (int i = 0; i < slab.size() - arrayCheckOffset; i++) {
-//                for (int j = i; j < i + arrayCheckOffset; j++) {
-//                    double tempDistance = getDistance(slab.get(i), slab.get(j));
-//                    if (tempDistance < distance) {
-//                        distance = tempDistance;
-//                        currentClosestPair[0] = slab.get(i);
-//                        currentClosestPair[1] = slab.get(j);
-//                    }
-//                }
-//            }
-//        }
-//        return currentClosestPair;
+        if (sortedXArray.length <= 3) {
+            double tempDistance = currentSmallestDistance;
+
+            for (int i = 0; i < sortedXArray.length - 1; i++) {
+                tempDistance = getDistance(sortedXArray[i], sortedXArray[i+1]);
+                if (tempDistance < currentSmallestDistance) {
+                    currentSmallestDistance = tempDistance;
+                    currentClosestPair[0] = sortedXArray[i];
+                    currentClosestPair[1] = sortedXArray[i+1];
+                }
+            }
+
+            System.out.println("Temp distance: " + tempDistance);
+
+            return tempDistance;
+
+        } else {
+            System.out.println((char)27 + "[31m" + "\nNew recurse\n" + (char)27 + "[0m");
+
+            // copy sortedX into left and right
+            leftXSorted = new AlgyPoint[sortedXArray.length / 2];
+            rightXSorted = new AlgyPoint[sortedXArray.length / 2];
+            System.arraycopy(sortedXArray, 0,
+                    leftXSorted, 0, leftXSorted.length);
+            System.arraycopy(sortedXArray, (sortedXArray.length / 2),
+                    rightXSorted, 0, rightXSorted.length);
+
+            for (AlgyPoint p : leftXSorted) {
+                System.out.println("left X sorted: " + p);
+            }
+            System.out.println();
+            for (AlgyPoint p : rightXSorted) {
+                System.out.println("right X sorted: " + p);
+            }
+
+            // copy sortedY into left and right, matching sortedX arrays
+            leftYSorted = new AlgyPoint[sortedXArray.length / 2];
+            rightYSorted = new AlgyPoint[sortedXArray.length / 2];
+
+            int indexX = 0, indexY = 0;
+            for (AlgyPoint point : sortedYArray) {
+                for (AlgyPoint innerPoint : leftXSorted) {
+                    if ((innerPoint.getX() == point.getX()) && (innerPoint.getY() == point.getY())) {
+                        leftYSorted[indexX] = innerPoint;
+                        indexX++;
+                    }
+                }
+
+                for (AlgyPoint innerPoint : rightXSorted) {
+                    if ((innerPoint.getX() == point.getX()) && (innerPoint.getY() == point.getY())) {
+                        rightYSorted[indexY] = innerPoint;
+                        indexY++;
+                    }
+                }
+            }
+
+            System.out.println();
+            for (AlgyPoint p : leftXSorted) {
+                System.out.println("LXS: " + p);
+            }
+            System.out.println();
+            for (AlgyPoint p : rightXSorted) {
+                System.out.println("RXS: " + p);
+            }
+            System.out.println();
+            for (AlgyPoint p : leftYSorted) {
+                System.out.println("LYS: " + p);
+            }
+            System.out.println();
+            for (AlgyPoint p : rightYSorted) {
+                System.out.println("RYS: " + p);
+            }
+
+            closestPair(rightXSorted, rightYSorted);
+            closestPair(leftXSorted, leftYSorted);
+
+        }
         return 0;
     }
 
-//    private double getDistance(AlgyPoint a, AlgyPoint b) {
-//        return Math.sqrt(Math.pow((b.getX() - a.getX()), 2) +
-//                Math.pow((b.getY() - a.getY()), 2));
-//    }
+    private double getDistance(AlgyPoint a, AlgyPoint b) {
+        return Math.sqrt(Math.pow((b.getX() - a.getX()), 2) +
+                Math.pow((b.getY() - a.getY()), 2));
+    }
 }
