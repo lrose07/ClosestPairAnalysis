@@ -150,3 +150,5 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/git,java,macos,intellij
+
+*.txt

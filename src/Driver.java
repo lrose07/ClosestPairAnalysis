@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Driver {
 
     public static void main(String[] args) {
-        //BruteForceSolver bfs = new BruteForceSolver(getInput(args[0]));
+        new BruteForceSolver(getInput(args[0]));
+        System.out.println();
         new DivideConquerSolver(getInput(args[0]));
-        //bfs.getClosestPair();
     }
 
     private static String getInput(String s) {

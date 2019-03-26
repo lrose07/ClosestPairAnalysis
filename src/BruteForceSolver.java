@@ -8,6 +8,9 @@ class BruteForceSolver {
     }
 
     BruteForceSolver(String inputStream) {
+
+        System.out.println("*******************\nBrute Force Solver\n");
+
         long readStartTime = System.nanoTime();
         parseInput(inputStream);
         long readEndTime = System.nanoTime();
