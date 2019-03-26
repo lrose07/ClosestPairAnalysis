@@ -3,6 +3,8 @@ import java.util.Arrays;
 
 class DivideConquerSolver {
 
+    private long startTimeSort;
+
     private AlgyPoint[] allPoints;
     private AlgyPoint[] currentClosestPair = new AlgyPoint[2];
     private double currentSmallestDistance;
@@ -11,6 +13,7 @@ class DivideConquerSolver {
 
     DivideConquerSolver(String inputStream) {
         System.out.println("*******************\nDivide and Conquer Solver\n");
+        startTimeSort = System.nanoTime();
         parseInput(inputStream);
         runAlgorithm();
     }
@@ -43,7 +46,6 @@ class DivideConquerSolver {
     }
 
     private void runAlgorithm() {
-        long startTimeSort = System.nanoTime();
         AlgyPoint[] xSorted = sortPointsByX();
         AlgyPoint[] ySorted = sortPointsByY();
         long endTimeSort = System.nanoTime();
@@ -62,6 +64,7 @@ class DivideConquerSolver {
     }
 
     private void closestPair(AlgyPoint[] sortedXArray, AlgyPoint[] sortedYArray) {
+        // brute force on small data sets
         if (sortedXArray.length <= 3) {
             for (int i = 0; i < sortedXArray.length - 1; i++) {
                 double tempDistance = getDistance(sortedXArray[i], sortedXArray[i+1]);
@@ -84,23 +87,18 @@ class DivideConquerSolver {
             AlgyPoint[] leftYSorted = new AlgyPoint[sortedXArray.length / 2];
             AlgyPoint[] rightYSorted = new AlgyPoint[sortedXArray.length / 2];
 
-            int indexX = 0, indexY = 0;
-            for (AlgyPoint point : sortedYArray) {
-                for (AlgyPoint innerPoint : leftXSorted) {
-                    if ((innerPoint.getX() == point.getX()) && (innerPoint.getY() == point.getY())) {
-                        leftYSorted[indexX] = innerPoint;
-                        indexX++;
-                    }
-                }
-
-                for (AlgyPoint innerPoint : rightXSorted) {
-                    if ((innerPoint.getX() == point.getX()) && (innerPoint.getY() == point.getY())) {
-                        rightYSorted[indexY] = innerPoint;
-                        indexY++;
-                    }
+            int lysIterator = 0, rysIterator = 0;
+            for (AlgyPoint p : sortedYArray) {
+                if (Arrays.asList(leftXSorted).contains(p)) {
+                    leftYSorted[lysIterator] = p;
+                    lysIterator++;
+                } else if (Arrays.asList(rightXSorted).contains(p)) {
+                    rightYSorted[rysIterator] = p;
+                    rysIterator++;
                 }
             }
 
+            // recursive calls
             closestPair(rightXSorted, rightYSorted);
             closestPair(leftXSorted, leftYSorted);
 
@@ -108,13 +106,13 @@ class DivideConquerSolver {
             double midpoint = sortedXArray[sortedXArray.length / 2].getX();
             ArrayList<AlgyPoint> strip = new ArrayList<>();
             for (int i = 0; i < sortedXArray.length; i++) {
-                if (Math.abs(sortedXArray[i].getY() - midpoint) < currentSmallestDistance) {
+                if (Math.abs(sortedXArray[i].getX() - midpoint) < currentSmallestDistance) {
                     strip.add(sortedYArray[i]);
                 }
             }
 
             for (int i = 0; i < strip.size(); i++) {
-                for (int j = 0; j < strip.size() - 1; j++) {
+                for (int j = i; j < 6 && j < strip.size() - 1; j++) {
                     double tempDistance = getDistance(strip.get(j), strip.get(j+1));
                     if (tempDistance < currentSmallestDistance) {
                         currentSmallestDistance = tempDistance;

@@ -3,10 +3,6 @@ class BruteForceSolver {
     private AlgyPoint[] allPoints;
     private AlgyPoint[] closestPair;
 
-    BruteForceSolver() {
-
-    }
-
     BruteForceSolver(String inputStream) {
 
         System.out.println("*******************\nBrute Force Solver\n");
@@ -27,14 +23,6 @@ class BruteForceSolver {
         System.out.println("with a distance of " + getDistance(closestPair[0], closestPair[1]));
     }
 
-    BruteForceSolver(AlgyPoint[] points) {
-        computeClosestPair(points);
-    }
-
-//    void solve(AlgyPoint[] points) {
-//
-//    }
-
     private void parseInput(String s) {
         String[] allInputNums = s.split("\\s+");
         int countOfPoints = Integer.parseInt(allInputNums[0]);
@@ -53,7 +41,7 @@ class BruteForceSolver {
                 Math.pow((b.getY() - a.getY()), 2));
     }
 
-    void computeClosestPair(AlgyPoint[] points) {
+    private void computeClosestPair(AlgyPoint[] points) {
         closestPair = new AlgyPoint[2];
         double smallestDistance = Math.abs(getDistance(points[0], points[1]));
 
@@ -67,12 +55,5 @@ class BruteForceSolver {
                 }
             }
         }
-    }
-
-    AlgyPoint[] getClosestPair() {
-//        System.out.println("closest Pair:");
-//        System.out.println(closestPair[0]);
-//        System.out.println(closestPair[1]);
-        return closestPair;
     }
 }
