@@ -14,6 +14,8 @@ class BruteForceSolver {
     private AlgyPoint[] allPoints;
     private AlgyPoint[] closestPair;
 
+    private int numberOfInitialPoints;
+
     /**
      * Constructs a BruteForceSolver object that runs the brute force
      * algorithm on a set of input points
@@ -33,7 +35,8 @@ class BruteForceSolver {
         computeClosestPair(allPoints);
         long computeEndTime = System.nanoTime();
 
-        System.out.println("Time to find pair: " + ((computeEndTime - computeStartTime) / 1000000) + " milliseconds");
+        System.out.println("Time to compute " + numberOfInitialPoints + " points: "
+                + ((computeEndTime - computeStartTime) / 1000000) + " milliseconds");
 
         System.out.println("Closest pair: (" + closestPair[0] + ") and (" + closestPair[1] + ")");
         System.out.println("with a distance of " + getDistance(closestPair[0], closestPair[1]));
@@ -45,9 +48,9 @@ class BruteForceSolver {
      */
     private void parseInput(String s) {
         String[] allInputNums = s.split("\\s+");
-        int countOfPoints = Integer.parseInt(allInputNums[0]);
+        numberOfInitialPoints = Integer.parseInt(allInputNums[0]);
 
-        allPoints = new AlgyPoint[countOfPoints];
+        allPoints = new AlgyPoint[numberOfInitialPoints];
 
         for (int i = 1, j = 0; i < allInputNums.length; i+=2, j++) {
             int pointX = Integer.parseInt(allInputNums[i]);

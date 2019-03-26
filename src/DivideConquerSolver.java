@@ -20,6 +20,8 @@ class DivideConquerSolver {
     private AlgyPoint[] currentClosestPair = new AlgyPoint[2];
     private double currentSmallestDistance;
 
+    private int numberOfInitialPoints;
+
     /**
      * Constructs a DivideConquerSolver object
      * @param inputStream string of points as input
@@ -37,9 +39,9 @@ class DivideConquerSolver {
      */
     private void parseInput(String s) {
         String[] allInputNums = s.split("\\s+");
-        int countOfPoints = Integer.parseInt(allInputNums[0]);
+        numberOfInitialPoints = Integer.parseInt(allInputNums[0]);
 
-        allPoints = new AlgyPoint[countOfPoints];
+        allPoints = new AlgyPoint[numberOfInitialPoints];
 
         for (int i = 1, j = 0; i < allInputNums.length; i+=2, j++) {
             int pointX = Integer.parseInt(allInputNums[i]);
@@ -78,7 +80,7 @@ class DivideConquerSolver {
         AlgyPoint[] ySorted = sortPointsByY();
         long endTimeSort = System.nanoTime();
 
-        System.out.println("Time to sort: " + (endTimeSort - startTimeSort) / 1000000 + " milliseconds");
+        System.out.println("Time to parse/sort: " + (endTimeSort - startTimeSort) / 1000000 + " milliseconds");
 
         currentSmallestDistance = getDistance(xSorted[0], xSorted[1]);
 
@@ -86,7 +88,8 @@ class DivideConquerSolver {
         closestPair(xSorted, ySorted);
         long endTimeAlgorithm = System.nanoTime();
 
-        System.out.println("Time to compute: " + (endTimeAlgorithm - startTimeAlgorithm) / 1000000 + " milliseconds");
+        System.out.println("Time to compute " + numberOfInitialPoints + " points: "
+                + (endTimeAlgorithm - startTimeAlgorithm) / 1000000 + " milliseconds");
         System.out.println("Closest pair: (" + currentClosestPair[0] + ") and (" + currentClosestPair[1] + ")");
         System.out.println("with a distance of " + currentSmallestDistance);
     }
@@ -138,7 +141,7 @@ class DivideConquerSolver {
 
             // check slab
             double midpoint = sortedXArray[sortedXArray.length / 2].getX();
-            ArrayList<AlgyPoint> strip = new ArrayList<>();
+            ArrayList<AlgyPoint> strip = new ArrayList<AlgyPoint>();
             for (int i = 0; i < sortedXArray.length; i++) {
                 if (Math.abs(sortedXArray[i].getX() - midpoint) < currentSmallestDistance) {
                     strip.add(sortedYArray[i]);

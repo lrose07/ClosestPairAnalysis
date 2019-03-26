@@ -18,6 +18,6 @@ public class CompareByY implements Comparator<AlgyPoint> {
      * @return the AlgyPoint with the lower Y value
      */
     public int compare(AlgyPoint a, AlgyPoint b) {
-        return Integer.compare(a.getY(), b.getY());
+        return Integer.valueOf(a.getY()).compareTo(Integer.valueOf(b.getY()));
     }
 }
