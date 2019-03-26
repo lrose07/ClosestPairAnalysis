@@ -1,7 +1,22 @@
 import java.util.Scanner;
 
+/**
+ * This program solves the closest pair problem by both brute force and divide
+ * and conquer, and outputs the time it takes to perform each.
+ *
+ * @author Lauren Rose
+ * @version v0.1
+ *
+ * Radford University
+ * Department of Information Technology
+ * ITEC 360 - Data Structures and Analysis of Algorithms
+ */
 public class Driver {
 
+    /**
+     * Executes on program run
+     * @param args input parameter flags: brute, divide, or both
+     */
     public static void main(String[] args) {
 
         String input = getInput();
@@ -17,6 +32,10 @@ public class Driver {
         }
     }
 
+    /**
+     * Grabs input from stdin and builds a string with the contents
+     * @return string from input file
+     */
     private static String getInput() {
         StringBuilder inputStream = new StringBuilder();
 
