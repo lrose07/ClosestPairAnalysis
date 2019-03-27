@@ -22,7 +22,7 @@ class DivideConquerSolver {
 
     private int numberOfInitialPoints;
 
-    private int distanceCalculations = 0;
+    private long distanceCalculations = 0;
     private int recurseCalls = 0;
 
     /**

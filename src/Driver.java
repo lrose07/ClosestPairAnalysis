@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -13,23 +14,31 @@ import java.util.Scanner;
  */
 public class Driver {
 
+    private static String input;
+
     /**
      * Executes on program run
      * @param args input parameter flags: brute, divide, or both
      */
     public static void main(String[] args) {
 
-        String input = getInput();
-
-        if (args[0].compareToIgnoreCase("brute") == 0) {
-            new BruteForceSolver(input);
-        } else if (args[0].compareToIgnoreCase("divide") == 0) {
-            new DivideConquerSolver(input);
-        } else if (args[0].compareToIgnoreCase("both") == 0) {
+        //String input = getInput();
+        for (int i = 0; i < 15; i++) {
+            randomPointGenerator();
             new BruteForceSolver(input);
             System.out.println();
             new DivideConquerSolver(input);
         }
+
+//        if (args[0].compareToIgnoreCase("brute") == 0) {
+//            new BruteForceSolver(input);
+//        } else if (args[0].compareToIgnoreCase("divide") == 0) {
+//            new DivideConquerSolver(input);
+//        } else if (args[0].compareToIgnoreCase("both") == 0) {
+//            new BruteForceSolver(input);
+//            System.out.println();
+//            new DivideConquerSolver(input);
+//        }
     }
 
     /**
@@ -48,5 +57,22 @@ public class Driver {
         scan.close();
 
         return inputStream.toString();
+    }
+
+    private static void randomPointGenerator() {
+        StringBuilder sb = new StringBuilder();
+        Random rand = new Random();
+
+        sb.append(100000);
+        sb.append("\n");
+
+        for (int i = 0; i < 100000; i++) {
+            sb.append(rand.nextInt(15000));
+            sb.append(" ");
+            sb.append(rand.nextInt(150000));
+            sb.append("\n");
+        }
+
+        input = sb.toString();
     }
 }
