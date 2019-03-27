@@ -22,6 +22,9 @@ class DivideConquerSolver {
 
     private int numberOfInitialPoints;
 
+    private int distanceCalculations = 0;
+    private int recurseCalls = 0;
+
     /**
      * Constructs a DivideConquerSolver object
      * @param inputStream string of points as input
@@ -92,6 +95,8 @@ class DivideConquerSolver {
                 + (endTimeAlgorithm - startTimeAlgorithm) / 1000000 + " milliseconds");
         System.out.println("Closest pair: (" + currentClosestPair[0] + ") and (" + currentClosestPair[1] + ")");
         System.out.println("with a distance of " + currentSmallestDistance);
+        System.out.println("Algorithm made " + distanceCalculations + " distance calculations.");
+        System.out.println("Algorithm made " + recurseCalls + " recursive calls.");
     }
 
     /**
@@ -101,6 +106,7 @@ class DivideConquerSolver {
      * @param sortedYArray array of the same points sorted by Y coordinate
      */
     private void closestPair(AlgyPoint[] sortedXArray, AlgyPoint[] sortedYArray) {
+        recurseCalls++;
         // brute force on small data sets
         if (sortedXArray.length <= 3) {
             for (int i = 0; i < sortedXArray.length - 1; i++) {
@@ -168,6 +174,7 @@ class DivideConquerSolver {
      * @return distance between the points
      */
     private double getDistance(AlgyPoint a, AlgyPoint b) {
+        distanceCalculations++;
         return Math.sqrt(Math.pow((b.getX() - a.getX()), 2) +
                 Math.pow((b.getY() - a.getY()), 2));
     }

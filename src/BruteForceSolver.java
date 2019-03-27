@@ -16,6 +16,8 @@ class BruteForceSolver {
 
     private int numberOfInitialPoints;
 
+    private int distanceCalculations = 0;
+
     /**
      * Constructs a BruteForceSolver object that runs the brute force
      * algorithm on a set of input points
@@ -40,6 +42,7 @@ class BruteForceSolver {
 
         System.out.println("Closest pair: (" + closestPair[0] + ") and (" + closestPair[1] + ")");
         System.out.println("with a distance of " + getDistance(closestPair[0], closestPair[1]));
+        System.out.println("Algorithm made " + distanceCalculations + " distance calculations.");
     }
 
     /**
@@ -66,6 +69,7 @@ class BruteForceSolver {
      * @return distance between the points
      */
     private double getDistance(AlgyPoint a, AlgyPoint b) {
+        distanceCalculations++;
         return Math.sqrt(Math.pow((b.getX() - a.getX()), 2) +
                 Math.pow((b.getY() - a.getY()), 2));
     }
