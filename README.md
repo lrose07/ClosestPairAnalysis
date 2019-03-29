@@ -14,3 +14,9 @@ Where flag can be:
   * `both`: runs both
 
 And filename is a file containing a list of points, where the first line of the file is the number of points that follow, one pair of coordinates per line.
+
+
+#### Dev Mode:
+To enter dev mode, run `java Driver -dev`
+
+The program will ask how many points (created randomly) and how many runs to perform. It will run both brute and divide.
